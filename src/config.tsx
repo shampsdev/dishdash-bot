@@ -11,6 +11,8 @@ export const BOT_TOKEN = process.env.BOT_TOKEN || '';
 
 export const ADMIN_IDS = process.env.ADMIN_IDS ? process.env.ADMIN_IDS.split(',').map(id => id.trim()) : [];
 
+export const API_BASE_URL = process.env.API_BASE_URL || '';
+
 if (DEBUG.toUpperCase() === 'TRUE') {
     logger.info("Bot token: " + BOT_TOKEN);
     logger.info("Admin ids: " + ADMIN_IDS);
