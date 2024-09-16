@@ -2,21 +2,42 @@ import axios from 'axios';
 import { API_BASE_URL } from 'src/config';
 import logger from 'src/utils/logger';
 
-interface CreateLobbyProps {
-  coords: {
-    latitude: number;
-    longitude: number;
+interface LobbyLocationProps {
+  location: {
+    lat: number;
+    lon: number;
   };
 }
 
-export const createLobby = async ({ coords }: CreateLobbyProps) => {
+interface LobbyData {
+  distance: number;
+  lobby: {
+    id: string;
+    location: {
+      lon: number;
+      lat: number;
+    };
+  };
+}
+
+export const createLobby = async ({ location }: LobbyLocationProps) => {
   try {
-    return await axios.post(`${API_BASE_URL}/api/v1/lobbies`, {
-      location: {
-        lat: coords.latitude,
-        lon: coords.longitude,
-      },
+    return await axios.post<LobbyData>(`${API_BASE_URL}/api/v1/lobbies`, {
+      location,
     });
+  } catch (err) {
+    logger.error(err);
+  }
+};
+
+export const findLobby = async ({ location }: LobbyLocationProps) => {
+  try {
+    return await axios.post<LobbyData>(
+      `${API_BASE_URL}/api/v1/lobbies/nearest`,
+      {
+        location,
+      }
+    );
   } catch (err) {
     logger.error(err);
   }

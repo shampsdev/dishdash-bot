@@ -19,6 +19,8 @@ export const REPORT_CHAT_ID =
     : undefined;
 export const API_BASE_URL = process.env.API_BASE_URL || '';
 
+export const BOT_USERNAME = process.env.BOT_USERNAME || '';
+
 if (DEBUG) {
   logger.info('Bot token: ' + BOT_TOKEN);
   logger.info('Admin ids: ' + ADMIN_IDS.join(', '));
