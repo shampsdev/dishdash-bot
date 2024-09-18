@@ -22,9 +22,11 @@ interface LobbyData {
 
 export const createLobby = async ({ location }: LobbyLocationProps) => {
   try {
-    return await axios.post<LobbyData>(`${API_BASE_URL}/api/v1/lobbies`, {
+    const data = await axios.post<LobbyData>(`${API_BASE_URL}/lobbies`, {
       location,
     });
+
+    return data;
   } catch (err) {
     logger.error(err);
   }
@@ -33,7 +35,7 @@ export const createLobby = async ({ location }: LobbyLocationProps) => {
 export const findLobby = async ({ location }: LobbyLocationProps) => {
   try {
     return await axios.post<LobbyData>(
-      `${API_BASE_URL}/api/v1/lobbies/nearest`,
+      `${API_BASE_URL}/lobbies/nearest`,
       {
         location,
       }

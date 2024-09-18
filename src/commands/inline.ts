@@ -23,7 +23,10 @@ export function setupInlineQuery(bot: Telegraf<Context>) {
           'Создать новое лобби, чтобы легко и быстро выбрать место для встречи в компании.',
         thumbnail_url: `${BOT_URL}/cover.jpg`,
         input_message_content: {
-          message_text: `Добро пожаловать, <b>${ctx.from.first_name}</b>!\n\nИспользуйте DishDash, чтобы легко и быстро выбрать место для встречи в компании. Упомяните бота в чате и введите <code>@dishdash_bot start</code> для создания лобби.\n\nБот <a href='https://dishdash.ru'>DishDash</a> разработан командой <a href='https://t.me/+4l8DChDSxMQxNWUy'>"Шампиньоны"</a>.`,
+          link_preview_options: {
+            url: 'https://dishdash.ru/',
+          },
+          message_text: `Не знаете, куда пойти? Давайте подберем вам место!`,
           parse_mode: 'HTML',
         },
         reply_markup: {
@@ -52,35 +55,32 @@ export function setupInlineQuery(bot: Telegraf<Context>) {
         },
       });
 
-      return lobby?.data.lobby.id;
+      return lobby?.data.lobby;
     };
 
-    // const coords = ctx.chosenInlineResult.location;
-    const coords = {
-      latitude: 59.9311,
-      longitude: 30.3609,
-    };
+    const coords = ctx.chosenInlineResult.location;
 
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     if (coords) {
-      const lobbyId = await getLobbyUrl(coords);
-
-      const button: InlineKeyboardButton = {
-        text: 'Присоединится',
-        url: `https://t.me/${BOT_USERNAME}/app?startapp=${lobbyId}`,
-      };
+      const lobby = await getLobbyUrl(coords);
 
       await bot.telegram.editMessageText(
         undefined,
         undefined,
         messageId,
-        'kek',
+        `Не знаете, куда пойти? Давайте подберем вам место! (инвайт в лобби ${lobby?.id})`,
         {
           parse_mode: 'Markdown',
-          reply_markup: {
-            inline_keyboard: [[button]],
+          link_preview_options: {
+            url: `https://t.me/${BOT_USERNAME}/app?startapp=${lobby?.id}`,
           },
         }
+      );
+    } else {
+      await bot.telegram.editMessageText(
+        undefined,
+        undefined,
+        messageId,
+        'Бот создает лобби на основе ваших координат, чтобы предлагать вам места поближе к вам. К сожалению, у нас нет доступа к ним, поэтому не можем создать лобби.'
       );
     }
   });
