@@ -8,13 +8,13 @@ import {
 
 const customLevels = {
   levels: {
-    error: 0,
-    warn: 1,
-    info: 2,
-    verbose: 3,
-    debug: 4,
-    silly: 5,
-    report: 6,
+    report: 0,
+    error: 1,
+    warn: 2,
+    info: 3,
+    verbose: 4,
+    debug: 5,
+    silly: 6,
   },
 };
 

@@ -20,8 +20,8 @@ export class TelegramTransport extends Transport {
   }
 
   log(info: unknown, callback: () => void) {
+    console.log(info)
     const log = info as { message: string; level: string };
-    if (log.level !== this.level) return;
 
     setImmediate(() => {
       this.emit('logged', info);
@@ -29,8 +29,6 @@ export class TelegramTransport extends Transport {
 
     if (!this.debug && this.chat_id !== undefined) {
       this.bot.telegram.sendMessage(this.chat_id, `[REPORT] ${log.message}`);
-    } else {
-      console.log(`[${log.level.toUpperCase()}]: ${log.message}`);
     }
 
     callback();
