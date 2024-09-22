@@ -1,5 +1,5 @@
-import axios from 'axios';
-import { API_BASE_URL } from '../config';
+import axios from "axios";
+import { API_BASE_URL } from "../config";
 
 export interface Tag {
   id?: number;
@@ -20,7 +20,7 @@ export const createTag = async (tag: Tag): Promise<Tag> => {
 export const updateTag = async (id: number, tag: Tag): Promise<Tag> => {
   const response = await axios.put<Tag>(
     `${API_BASE_URL}/places/tag/${id}`,
-    tag
+    tag,
   );
   return response.data;
 };

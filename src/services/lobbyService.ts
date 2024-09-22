@@ -1,6 +1,6 @@
-import axios from 'axios';
-import { API_BASE_URL } from 'src/config';
-import logger from 'src/utils/logger';
+import axios from "axios";
+import { API_BASE_URL } from "src/config";
+import logger from "src/utils/logger";
 
 interface LobbyLocationProps {
   location: {
@@ -34,12 +34,9 @@ export const createLobby = async ({ location }: LobbyLocationProps) => {
 
 export const findLobby = async ({ location }: LobbyLocationProps) => {
   try {
-    return await axios.post<LobbyData>(
-      `${API_BASE_URL}/lobbies/nearest`,
-      {
-        location,
-      }
-    );
+    return await axios.post<LobbyData>(`${API_BASE_URL}/lobbies/nearest`, {
+      location,
+    });
   } catch (err) {
     logger.error(err);
   }

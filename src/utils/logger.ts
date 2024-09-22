@@ -4,7 +4,7 @@ import {
   LeveledLogMethod,
   Logger,
   transports,
-} from 'winston';
+} from "winston";
 
 const customLevels = {
   levels: {
@@ -19,24 +19,24 @@ const customLevels = {
 };
 
 type CustomLogger = Logger &
-  Record<keyof (typeof customLevels)['levels'], LeveledLogMethod>;
+  Record<keyof (typeof customLevels)["levels"], LeveledLogMethod>;
 
 const logger: CustomLogger = createLogger({
   levels: customLevels.levels,
   format: format.combine(
     format.timestamp({
-      format: 'YYYY-MM-DD HH:mm:ss',
+      format: "YYYY-MM-DD HH:mm:ss",
     }),
     format.printf(
       (info) =>
-        `${info.timestamp} [${info.level.toUpperCase()}]: ${info.message}`
-    )
+        `${info.timestamp} [${info.level.toUpperCase()}]: ${info.message}`,
+    ),
   ),
   transports: [new transports.Console()],
 }) as CustomLogger;
 
 (
-  Object.keys(customLevels.levels) as (keyof (typeof customLevels)['levels'])[]
+  Object.keys(customLevels.levels) as (keyof (typeof customLevels)["levels"])[]
 ).forEach((level) => {
   logger[level] = logger.log.bind(logger, level);
 });

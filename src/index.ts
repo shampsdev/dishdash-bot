@@ -1,3 +1,3 @@
-import './bot';
+import "./bot";
 
-console.log('Bot is running...');
+console.log("Bot is running...");

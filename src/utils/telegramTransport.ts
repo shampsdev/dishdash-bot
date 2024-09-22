@@ -1,6 +1,6 @@
-import { Context, Telegraf } from 'telegraf';
-import { Update } from 'telegraf/types';
-import Transport from 'winston-transport';
+import { Context, Telegraf } from "telegraf";
+import { Update } from "telegraf/types";
+import Transport from "winston-transport";
 
 export class TelegramTransport extends Transport {
   debug: boolean;
@@ -11,7 +11,7 @@ export class TelegramTransport extends Transport {
       debug: boolean;
       bot: Telegraf<Context<Update>>;
       chat_id: number | undefined;
-    }
+    },
   ) {
     super(opts);
     this.debug = opts.debug;
@@ -20,11 +20,11 @@ export class TelegramTransport extends Transport {
   }
 
   log(info: unknown, callback: () => void) {
-    console.log(info)
+    console.log(info);
     const log = info as { message: string; level: string };
 
     setImmediate(() => {
-      this.emit('logged', info);
+      this.emit("logged", info);
     });
 
     if (!this.debug && this.chat_id !== undefined) {
