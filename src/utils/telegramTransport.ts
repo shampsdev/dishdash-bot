@@ -20,7 +20,6 @@ export class TelegramTransport extends Transport {
   }
 
   log(info: unknown, callback: () => void) {
-    console.log(info);
     const log = info as { message: string; level: string };
 
     setImmediate(() => {
