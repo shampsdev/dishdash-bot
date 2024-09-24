@@ -1,6 +1,6 @@
-import axios from "axios";
-import { API_BASE_URL } from "src/config";
-import logger from "src/utils/logger";
+import axios from 'axios';
+import { API_BASE_URL } from 'src/config';
+import logger from 'src/utils/logger';
 
 interface LobbyLocationProps {
   location: {
@@ -10,13 +10,10 @@ interface LobbyLocationProps {
 }
 
 interface LobbyData {
-  distance: number;
-  lobby: {
-    id: string;
-    location: {
-      lon: number;
-      lat: number;
-    };
+  id: string;
+  location: {
+    lon: number;
+    lat: number;
   };
 }
 
