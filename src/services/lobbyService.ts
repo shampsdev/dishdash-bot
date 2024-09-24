@@ -1,6 +1,6 @@
-import axios from 'axios';
-import { API_BASE_URL } from 'src/config';
-import logger from 'src/utils/logger';
+import axios from "axios";
+import { API_BASE_URL } from "src/config";
+import logger from "src/utils/logger";
 
 interface LobbyLocationProps {
   location: {
