@@ -33,8 +33,6 @@ logger.add(
   }),
 );
 
-logger.report("penis");
-
 bot.use(loggerMiddleware);
 bot.use(session({ defaultSession: () => ({ report_mode: false }) }));
 
