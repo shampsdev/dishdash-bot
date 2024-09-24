@@ -28,7 +28,7 @@
   "author": "Pierre Dahmani <hi@pierre-dev.com>",
   "license": "MIT",
   "scripts": {
-    "bundle": "rimraf dist && esbuild --outdir=dist --sourcemap --bundle --platform=node --target=node20.10.0 ./src/index.ts",
+    "bundle": "rimraf dist && esbuild --outdir=dist --sourcemap --bundle --platform=node --target=node22.1.0 ./src/index.ts",
     "compile": "tsc",
     "compile:watch": "tsc -w",
     "dev": "nodemon --watch src --watch test --ext ts,json --exec 'yarn bundle && yarn start'",
