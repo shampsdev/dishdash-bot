@@ -2,11 +2,7 @@ name: Publish Docker image
 
 on:
   workflow_run:
-    workflows:
-      - compile typescript
-      - check formatting
-      - check for linting issues
-      - test codebase
+    workflows: ["CI"]
     types:
       - completed
 
