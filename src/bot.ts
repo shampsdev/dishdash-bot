@@ -4,6 +4,7 @@ import {
   BOT_URL,
   DEBUG,
   FRONTEND_URL,
+  HTTP_PORT,
   REPORT_CHAT_ID,
 } from "./config";
 import logger from "./utils/logger";
@@ -82,6 +83,6 @@ app.get("/app", (req, res) => {
   res.redirect(`${FRONTEND_URL}/${req.query.tgWebAppStartParam}`);
 });
 
-app.listen(3500, () => {
+app.listen(HTTP_PORT, () => {
   logger.info("Server is running on port 3500");
 });

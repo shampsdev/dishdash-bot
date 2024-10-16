@@ -8,6 +8,8 @@ logger.info("DEBUG: " + DEBUG);
 
 export const FRONTEND_URL = process.env.FRONTEND_URL;
 
+export const HTTP_PORT = process.env.HTTP_PORT;
+
 export const BOT_TOKEN = process.env.BOT_TOKEN || "";
 
 export const ADMIN_IDS = process.env.ADMIN_IDS
