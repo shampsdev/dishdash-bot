@@ -84,5 +84,5 @@ app.get("/app", (req, res) => {
 });
 
 app.listen(HTTP_PORT, () => {
-  logger.info("Server is running on port 3500");
+  logger.info(`Server is running on port ${HTTP_PORT}`);
 });
