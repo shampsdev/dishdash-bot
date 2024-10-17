@@ -3,7 +3,7 @@ import logger from "src/utils/logger";
 import { Telegraf } from "telegraf";
 
 export function setupReportCommand(bot: Telegraf<MyContext>) {
-  bot.command("report", (ctx) => {
+  bot.command("report", async (ctx) => {
     logger.info(
       `Report mode set to true for user ${ctx.from.username ?? ctx.from.first_name}`,
     );
@@ -12,7 +12,7 @@ export function setupReportCommand(bot: Telegraf<MyContext>) {
     };
   });
 
-  bot.on("message", (ctx) => {
+  bot.on("message", async (ctx) => {
     if (ctx.session === undefined || ctx.session.report_mode !== true) return;
 
     const message = ctx.message as { text: string };
