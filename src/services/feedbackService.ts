@@ -20,6 +20,7 @@ export class FeedbackService implements IFeedbackService {
     }
 
     sendFeedback(feedback: Feedback): void {
-        this.bot.telegram.sendMessage(this.feedbackChatId, JSON.stringify(feedback));
+        const message = `💌 **Feedback from ${feedback.username}**\n\n${feedback.message}`;
+        this.bot.telegram.sendMessage(this.feedbackChatId, message, { parse_mode: 'MarkdownV2' });
     }
 }

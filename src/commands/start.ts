@@ -1,11 +1,9 @@
+import { BOT_USERNAME } from "src/config";
 import { Context, Telegraf } from "telegraf";
-import logger from "../utils/logger";
-import { adminMiddleware } from "../middlewares/adminMiddleware";
 
 export function setupStartCommand(bot: Telegraf<Context>) {
-  bot.start(adminMiddleware, async (ctx) => {
+  bot.start(async (ctx) => {
     const username = ctx.from.username || "unknown";
-    logger.info(`Admin ${username} used /start.`);
-    await ctx.reply(`Добро пожаловать, @${username}!`);
+    await ctx.reply(`Добро пожаловать, @${username}!\nЧтобы воспользоваться ботом, тгени его в любой беседе @${BOT_USERNAME}`);
   });
 }

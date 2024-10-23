@@ -10,6 +10,7 @@ export function setupFeedbackCommand(bot: Telegraf<MyContext>, fbService: IFeedb
         logger.info(
             `Feedback mode set to true for user ${ctx.from.username ?? ctx.from.first_name}`,
         );
+        ctx.reply("Пришли свой фидбэк в текстовом или голосовом формате!")
         ctx.session = {
             feedback_mode: true,
         };
