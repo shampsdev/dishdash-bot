@@ -17,9 +17,9 @@ export const ADMIN_IDS = process.env.ADMIN_IDS
   : [];
 
 export const BOT_URL = process.env.BOT_URL;
-export const REPORT_CHAT_ID =
-  process.env.REPORT_CHAT_ID !== undefined
-    ? parseInt(process.env.REPORT_CHAT_ID)
+export const FEEDBACK_CHAT_ID =
+  process.env.FEEDBACK_CHAT_ID !== undefined
+    ? parseInt(process.env.FEEDBACK_CHAT_ID)
     : undefined;
 export const API_BASE_URL = process.env.API_BASE_URL || "";
 

@@ -1,9 +1,9 @@
 import { MyContext } from "src/bot";
-import { BOT_TOKEN, DEBUG } from "src/config";
 import { transcribe } from "src/services/transcriptionService";
 import { IFeedbackService } from "src/services/feedbackService";
 import logger from "src/utils/logger";
 import { Telegraf } from "telegraf";
+import { BOT_TOKEN } from "src/config";
 
 export function setupFeedbackCommand(bot: Telegraf<MyContext>, fbService: IFeedbackService) {
     bot.command("feedback", async (ctx) => {
@@ -12,7 +12,6 @@ export function setupFeedbackCommand(bot: Telegraf<MyContext>, fbService: IFeedb
         );
         ctx.session = {
             feedback_mode: true,
-            report_mode: false,
         };
     });
 
@@ -30,21 +29,15 @@ export function setupFeedbackCommand(bot: Telegraf<MyContext>, fbService: IFeedb
                 })
             })
         } else if ('text' in ctx.message) {
-            const message = ctx.message as { text: string };
-
-            if (DEBUG) {
-                logger.report({ message: message.text, level: "report" });
-            } else {
-                fbService.sendFeedback({
-                    username: ctx.message.from.username ?? ctx.message.from.id.toString(),
-                    message: ctx.message.text
-                })
-            }   
+            fbService.sendFeedback({
+                username: ctx.message.from.username ? 
+                    `@${ctx.message.from.username}` : ctx.message.from.id.toString(),
+                message: ctx.message.text
+            })
         }
 
         ctx.session = {
             feedback_mode: false,
-            report_mode: false,
         };
 
         return next();

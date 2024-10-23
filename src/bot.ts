@@ -5,7 +5,7 @@ import {
     DEBUG,
     FRONTEND_URL,
     HTTP_PORT,
-    REPORT_CHAT_ID,
+    FEEDBACK_CHAT_ID,
 } from "./config";
 import logger from "./utils/logger";
 import { loggerMiddleware } from "./middlewares/loggerMiddleware";
@@ -13,7 +13,6 @@ import { loggerMiddleware } from "./middlewares/loggerMiddleware";
 import { setupStartCommand } from "./commands/start";
 import { setupHelpCommand } from "./commands/help";
 import { setupInlineQuery } from "./commands/inline";
-import { setupReportCommand } from "./commands/report";
 import { TelegramTransport } from "./utils/telegramTransport";
 
 import express from "express";
@@ -23,7 +22,6 @@ import { FeedbackService } from "./services/feedbackService";
 
 // Telegraf
 interface SessionData {
-    report_mode: boolean;
     feedback_mode: boolean;
 }
 
@@ -40,18 +38,17 @@ logger.add(
         bot,
         debug: DEBUG,
         level: "report",
-        chat_id: REPORT_CHAT_ID,
+        chat_id: FEEDBACK_CHAT_ID,
     }),
 );
 
 bot.use(loggerMiddleware);
-bot.use(session({ defaultSession: () => ({ report_mode: false, feedback_mode: false }) }));
+bot.use(session({ defaultSession: () => ({ feedback_mode: false }) }));
 
 
 setupJoinCommand(bot);
 setupStartCommand(bot);
-setupFeedbackCommand(bot, new FeedbackService(bot, REPORT_CHAT_ID ?? 0));
-setupReportCommand(bot);
+setupFeedbackCommand(bot, new FeedbackService(bot, FEEDBACK_CHAT_ID ?? 0));
 setupHelpCommand(bot);
 setupInlineQuery(bot);
 
