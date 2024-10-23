@@ -8,18 +8,22 @@ export function setupReportCommand(bot: Telegraf<MyContext>) {
       `Report mode set to true for user ${ctx.from.username ?? ctx.from.first_name}`,
     );
     ctx.session = {
-      report_mode: true,
+        report_mode: true,
+        feedback_mode: false
     };
   });
 
-  bot.on("message", async (ctx) => {
-    if (ctx.session === undefined || ctx.session.report_mode !== true) return;
+  bot.on("message", async (ctx, next) => {
+    if (ctx.session === undefined || ctx.session.report_mode !== true) return next();
 
     const message = ctx.message as { text: string };
     logger.report({ message: message.text, level: "report" });
 
     ctx.session = {
-      report_mode: false,
+        report_mode: false,
+        feedback_mode: false
     };
+
+    return next();
   });
 }

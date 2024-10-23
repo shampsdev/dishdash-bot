@@ -1,5 +1,6 @@
 import axios from "axios"
 import { WHISPER_API_KEY } from "src/config";
+import logger from "src/utils/logger";
 
 interface TranscriptionResponse {
     delayTime: number;
@@ -33,6 +34,7 @@ interface Segment {
 // TODO: clean this up for god's sake
 
 export const transcribe = async (audioUrl: string) => {
+    logger.info("Sent file for transcription")
     const res = await axios.post<TranscriptionResponse>('https://api.runpod.ai/v2/4dqdvavjtku7de/runsync', {
         input: {
             audio: audioUrl
