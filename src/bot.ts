@@ -83,11 +83,11 @@ app.use(express.static("public", options));
 app.use(bot.webhookCallback("/webhook"));
 
 app.get("/app", (req, res) => {
-  res.redirect(
-    `${FRONTEND_URL}${req.query.tgWebAppStartParam && "/" + req.query.tgWebAppStartParam.toString()}`,
-  );
+    res.redirect(
+        `${FRONTEND_URL}${req.query.tgWebAppStartParam ? "/" + req.query.tgWebAppStartParam.toString() : ''}`
+    );
 });
 
 app.listen(HTTP_PORT, () => {
-  logger.info(`Server is running on port ${HTTP_PORT}`);
+    logger.info(`Server is running on port ${HTTP_PORT}`);
 });
