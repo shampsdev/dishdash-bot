@@ -33,4 +33,4 @@ if (DEBUG) {
 export const S3_ACCESS_KEY_ID = process.env.S3_ACCESS_KEY_ID;
 export const S3_ACCESS_KEY = process.env.S3_ACCESS_KEY;
 
-export const WHISPER_API_KEY = process.env.WHISPER_API_KEY
+export const WHISPER_API_KEY = process.env.WHISPER_API_KEY;
