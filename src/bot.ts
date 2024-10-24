@@ -84,7 +84,7 @@ app.use(bot.webhookCallback("/webhook"));
 
 app.get("/app", (req, res) => {
   res.redirect(
-    `${FRONTEND_URL}${req.query.tgWebAppStartParam && "/" + req.query.tgWebAppStartParam.toString()}`,
+    `${FRONTEND_URL}${req.query.tgWebAppStartParam ? "/" + req.query.tgWebAppStartParam.toString() : ""}`,
   );
 });
 
