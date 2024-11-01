@@ -6,6 +6,18 @@ export function setupStartCommand(bot: Telegraf<Context>) {
     const username = ctx.from.username || "unknown";
     await ctx.reply(
       `Добро пожаловать, @${username}!\nЧтобы воспользоваться ботом, тгени его в любой беседе @${BOT_USERNAME}`,
+      {
+        reply_markup: {
+          inline_keyboard: [
+            [
+              {
+                text: "Открыть DishDash 🥪",
+                switch_inline_query: "",
+              },
+            ],
+          ],
+        },
+      },
     );
   });
 }
