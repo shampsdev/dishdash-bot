@@ -12,7 +12,7 @@ export function setupStartCommand(bot: Telegraf<Context>) {
             [
               {
                 text: "Открыть DishDash 🤌",
-                url: `https://t.me/${ctx.botInfo.username}/app`,
+                url: `https://t.me/${BOT_USERNAME}/app`,
               },
             ],
           ],
