@@ -1,15 +1,18 @@
-name: CD Dev
+name: cd-dev
 
 on:
-  workflow_run:
-    workflows: ["CI"]
-    types:
-      - completed
+  push:
+    branches:
+      - dev
 
 jobs:
-  deploy_to_dev:
-    name: Deploy to Dev
-    if: ${{ github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'dev' }}
+  ci-tests:
+    uses: ./.github/workflows/ci-tests.yaml
+
+  push_to_registry:
+    name: Development Continuous Deployment
+    needs: ci-tests
+    if: ${{ success() }}
     runs-on: ubuntu-latest
     permissions:
       packages: write
@@ -40,8 +43,8 @@ jobs:
           file: ./Dockerfile
           push: true
           tags: |
-            shampiniony/dishdash-bot:dev
-            shampiniony/dishdash-bot:dev-${{ env.COMMIT_SHORT_SHA }}
+            ${{ secrets.DOCKER_USERNAME }}/dishdash-bot:dev
+            ${{ secrets.DOCKER_USERNAME }}/dishdash-bot:dev-${{ env.COMMIT_SHORT_SHA }}
 
       - name: Trigger Watchtower to update dev container
         shell: bash
