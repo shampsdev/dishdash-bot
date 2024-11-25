@@ -1,0 +1,30 @@
+name: ci-tests
+
+on: [workflow_call]
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+
+      - name: Install Dependencies
+        run: yarn --immutable
+
+      - name: Lint Check
+        run: yarn lint:check
+
+      - name: Run Unit Tests
+        run: yarn test
+
+      - name: Compile Code
+        run: yarn compile
+
+      - name: Check Formatting
+        run: yarn format:check
