@@ -138,3 +138,6 @@ dist
 node_modules
 TODO
 .envrc
+
+.vscode
+
