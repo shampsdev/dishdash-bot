@@ -1,13 +1,11 @@
 name: cd-prod
 
-
 on:
   workflow_dispatch:
     inputs:
       tag_name:
         description: Write tag for deploy
         required: true
-
 
 jobs:
   ci-tests:
