@@ -1,10 +1,9 @@
 import { MyContext } from "src/bot";
-import { transcribe } from "src/services/transcriptionService";
 import { IFeedbackService } from "src/services/feedbackService";
 import logger from "src/utils/logger";
 import { Telegraf } from "telegraf";
-import { BOT_TOKEN } from "src/config";
 
+// TODO: voice message transcription
 export function setupFeedbackCommand(
   bot: Telegraf<MyContext>,
   fbService: IFeedbackService,
@@ -13,7 +12,7 @@ export function setupFeedbackCommand(
     logger.info(
       `Feedback mode set to true for user ${ctx.from.username ?? ctx.from.first_name}`,
     );
-    ctx.reply("Пришли свой фидбэк в текстовом или голосовом формате!");
+    ctx.reply("Пришли свой фидбэк в текстовом формате!");
     ctx.session = {
       feedback_mode: true,
     };
@@ -23,17 +22,7 @@ export function setupFeedbackCommand(
     if (ctx.session === undefined || ctx.session.feedback_mode !== true)
       return next();
 
-    if ("voice" in ctx.message) {
-      const fileInfo = await ctx.telegram.getFile(ctx.message.voice.file_id);
-      const fileUrl = `https://api.telegram.org/file/bot${BOT_TOKEN}/${fileInfo.file_path}`;
-
-      transcribe(fileUrl).then((transcription) => {
-        fbService.sendFeedback({
-          username: ctx.message.from.username ?? ctx.message.from.id.toString(),
-          message: transcription.output.transcription,
-        });
-      });
-    } else if ("text" in ctx.message) {
+    if ("text" in ctx.message) {
       fbService.sendFeedback({
         username: ctx.message.from.username
           ? `@${ctx.message.from.username}`
