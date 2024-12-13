@@ -3,11 +3,11 @@ import { Telegraf } from "telegraf";
 
 interface Feedback {
   username: string;
-  message: string;
 }
 
 export interface IFeedbackService {
   sendFeedback(feedback: Feedback): void;
+  sendFeedbackEnd(feedback: Feedback): void;
 }
 
 export class FeedbackService implements IFeedbackService {
@@ -19,14 +19,25 @@ export class FeedbackService implements IFeedbackService {
     this.feedbackChatId = feedbackChatId;
   }
 
-  sendFeedback(feedback: Feedback): void {
+  sendFeedback(feedback: Feedback) {
     const escapeMarkdown = (text: string): string =>
       text.replace(/([*_[\]()~`>#+\-=|{}.!\\])/g, "\\$1");
 
     const username = escapeMarkdown(feedback.username);
-    const messageText = escapeMarkdown(feedback.message);
 
-    const message = `💌 **Feedback from ${username}**\n\n${messageText}`;
+    const message = `💌 **Feedback from ${username}**💌`;
+    this.bot.telegram.sendMessage(this.feedbackChatId, message, {
+      parse_mode: "MarkdownV2",
+    });
+  }
+
+  sendFeedbackEnd(feedback: Feedback) {
+    const escapeMarkdown = (text: string): string =>
+      text.replace(/([*_[\]()~`>#+\-=|{}.!\\])/g, "\\$1");
+
+    const username = escapeMarkdown(feedback.username);
+
+    const message = `❌**END Feedback from ${username}**❌`;
     this.bot.telegram.sendMessage(this.feedbackChatId, message, {
       parse_mode: "MarkdownV2",
     });
