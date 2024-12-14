@@ -6,14 +6,14 @@ import { FEEDBACK_CHAT_ID } from "src/config";
 // TODO: voice message transcription
 export function setupFeedbackCommand(
   bot: Telegraf<MyContext>,
-  fbService: IFeedbackService
+  fbService: IFeedbackService,
 ) {
   bot.command("feedback", async (ctx) => {
     if (ctx.session?.feedback_mode) {
       return;
     }
     logger.info(
-      `Feedback mode set to true for user ${ctx.from.username ?? ctx.from.first_name}`
+      `Feedback mode set to true for user ${ctx.from.username ?? ctx.from.first_name}`,
     );
     ctx.reply("Пришли свой фидбэк в любом формате!\n");
     ctx.session = {
