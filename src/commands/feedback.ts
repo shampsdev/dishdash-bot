@@ -34,10 +34,7 @@ export function setupFeedbackCommand(
     if (targetChatId === undefined) {
       return next();
     }
-    if (ctx.session.feedback_mode) {
-      await ctx.forwardMessage(targetChatId);
-    }
-
+    await ctx.forwardMessage(targetChatId);
     ctx.reply("Спасибо за фидбек!");
     ctx.session.feedback_mode = false;
     return next();
