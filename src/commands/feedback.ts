@@ -29,7 +29,7 @@ export function setupFeedbackCommand(
     if (targetChatId === undefined) {
       return next();
     }
-    fbService.sendFeedback({
+    await fbService.sendFeedback({
       username: ctx.message.from.username
         ? `@${ctx.message.from.username}`
         : ctx.message.from.id.toString(),
