@@ -43,7 +43,13 @@ logger.add(
 );
 
 bot.use(loggerMiddleware);
-bot.use(session({ defaultSession: () => ({ feedback_mode: false }) }));
+bot.use(
+  session({
+    defaultSession: () => ({
+      feedback_mode: false,
+    }),
+  }),
+);
 
 setupJoinCommand(bot);
 setupStartCommand(bot);
