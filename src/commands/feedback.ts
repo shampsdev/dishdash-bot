@@ -19,11 +19,6 @@ export function setupFeedbackCommand(
     ctx.session = {
       feedback_mode: true,
     };
-    fbService.sendFeedback({
-      username: ctx.message.from.username
-        ? `@${ctx.message.from.username}`
-        : ctx.message.from.id.toString(),
-    });
   });
 
   bot.on("message", async (ctx, next) => {
@@ -34,6 +29,11 @@ export function setupFeedbackCommand(
     if (targetChatId === undefined) {
       return next();
     }
+    fbService.sendFeedback({
+      username: ctx.message.from.username
+        ? `@${ctx.message.from.username}`
+        : ctx.message.from.id.toString(),
+    });
     await ctx.forwardMessage(targetChatId);
     ctx.reply("Спасибо за фидбек!");
     ctx.session.feedback_mode = false;
