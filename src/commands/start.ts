@@ -1,8 +1,11 @@
 import { BOT_USERNAME } from "src/config";
+import { IMetricService } from 'src/services/metricService';
 import { Context, Telegraf } from "telegraf";
 
-export function setupStartCommand(bot: Telegraf<Context>) {
+export function setupStartCommand(bot: Telegraf<Context>, metricService: IMetricService) {
   bot.start(async (ctx) => {
+    metricService.sendTagEvent(ctx.payload);
+
     await ctx.replyWithPhoto(
       "https://storage.yandexcloud.net/dishash-s3/assets/bot/cover.jpeg",
       {
