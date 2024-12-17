@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export interface IMetricService {
-  sendTagEvent(tag: string): Promise<void>;
+  sendTagEvent(userId: number, tag: string): Promise<void>;
 }
 
 export class MetricService implements IMetricService {
@@ -13,13 +13,14 @@ export class MetricService implements IMetricService {
     this.domain = domain;
   }
 
-  async sendTagEvent(tag: string): Promise<void> {
+  async sendTagEvent(userId: number,tag: string): Promise<void> {
     const payload = {
       name: "tag",
       url: `https://${this.domain}`,
       domain: this.domain,
       props: {
         tag: tag,
+        user: userId
       },
     };
 
@@ -31,7 +32,7 @@ export class MetricService implements IMetricService {
         },
       });
 
-      console.log(`Tag event "${tag}" sent successfully.`, response.data);
+      console.log(`Tag event "${tag}" "${userId}" sent successfully.`, response.data);
     } catch (error) {
       if (axios.isAxiosError(error)) {
         console.error(

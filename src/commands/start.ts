@@ -4,7 +4,8 @@ import { Context, Telegraf } from "telegraf";
 
 export function setupStartCommand(bot: Telegraf<Context>, metricService: IMetricService) {
   bot.start(async (ctx) => {
-    metricService.sendTagEvent(ctx.payload);
+    const userId = ctx.from.id;
+    metricService.sendTagEvent(userId, ctx.payload);
 
     await ctx.replyWithPhoto(
       "https://storage.yandexcloud.net/dishash-s3/assets/bot/cover.jpeg",
