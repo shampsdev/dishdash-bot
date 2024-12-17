@@ -19,7 +19,7 @@ import express from "express";
 import { setupJoinCommand } from "./commands/join";
 import { setupFeedbackCommand } from "./commands/feedback";
 import { FeedbackService } from "./services/feedbackService";
-import { MetricService } from './services/metricService';
+import { MetricService } from "./services/metricService";
 
 // Telegraf
 interface SessionData {

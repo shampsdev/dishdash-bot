@@ -13,14 +13,14 @@ export class MetricService implements IMetricService {
     this.domain = domain;
   }
 
-  async sendTagEvent(userId: number,tag: string): Promise<void> {
+  async sendTagEvent(userId: number, tag: string): Promise<void> {
     const payload = {
       name: "tag",
       url: `https://${this.domain}`,
       domain: this.domain,
       props: {
         tag: tag,
-        user: userId
+        user: userId,
       },
     };
 
@@ -32,11 +32,14 @@ export class MetricService implements IMetricService {
         },
       });
 
-      console.log(`Tag event "${tag}" "${userId}" sent successfully.`, response.data);
+      console.log(
+        `Tag event "${tag}" "${userId}" sent successfully.`,
+        response.data,
+      );
     } catch (error) {
       if (axios.isAxiosError(error)) {
         console.error(
-          `Failed to send tag event: ${error.response?.status} ${error.response?.statusText}`
+          `Failed to send tag event: ${error.response?.status} ${error.response?.statusText}`,
         );
       } else {
         console.error("Error sending tag event:", error);
