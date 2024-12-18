@@ -11,7 +11,6 @@ import logger from "./utils/logger";
 import { loggerMiddleware } from "./middlewares/loggerMiddleware";
 
 import { setupStartCommand } from "./commands/start";
-import { setupHelpCommand } from "./commands/help";
 import { setupInlineQuery } from "./commands/inline";
 import { TelegramTransport } from "./utils/telegramTransport";
 
@@ -40,7 +39,7 @@ logger.add(
     debug: DEBUG,
     level: "report",
     chat_id: FEEDBACK_CHAT_ID,
-  }),
+  })
 );
 
 bot.use(loggerMiddleware);
@@ -49,7 +48,7 @@ bot.use(
     defaultSession: () => ({
       feedback_mode: false,
     }),
-  }),
+  })
 );
 
 const apiUrl = "https://plausible.shamps.dev/api/event";
@@ -61,7 +60,6 @@ const feedbackService = new FeedbackService(bot, FEEDBACK_CHAT_ID ?? 0);
 setupJoinCommand(bot);
 setupStartCommand(bot, metricService);
 setupFeedbackCommand(bot, feedbackService);
-setupHelpCommand(bot);
 setupInlineQuery(bot);
 
 bot
@@ -97,7 +95,7 @@ app.use(bot.webhookCallback("/webhook"));
 
 app.get("/app", (req, res) => {
   res.redirect(
-    `${FRONTEND_URL}${req.query.tgWebAppStartParam ? "/" + req.query.tgWebAppStartParam.toString() : ""}`,
+    `${FRONTEND_URL}${req.query.tgWebAppStartParam ? "/" + req.query.tgWebAppStartParam.toString() : ""}`
   );
 });
 
