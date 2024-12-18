@@ -11,7 +11,6 @@ import logger from "./utils/logger";
 import { loggerMiddleware } from "./middlewares/loggerMiddleware";
 
 import { setupStartCommand } from "./commands/start";
-import { setupHelpCommand } from "./commands/help";
 import { setupInlineQuery } from "./commands/inline";
 import { TelegramTransport } from "./utils/telegramTransport";
 
@@ -61,7 +60,6 @@ const feedbackService = new FeedbackService(bot, FEEDBACK_CHAT_ID ?? 0);
 setupJoinCommand(bot);
 setupStartCommand(bot, metricService);
 setupFeedbackCommand(bot, feedbackService);
-setupHelpCommand(bot);
 setupInlineQuery(bot);
 
 bot
