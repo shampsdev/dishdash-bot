@@ -39,7 +39,7 @@ logger.add(
     debug: DEBUG,
     level: "report",
     chat_id: FEEDBACK_CHAT_ID,
-  })
+  }),
 );
 
 bot.use(loggerMiddleware);
@@ -48,7 +48,7 @@ bot.use(
     defaultSession: () => ({
       feedback_mode: false,
     }),
-  })
+  }),
 );
 
 const apiUrl = "https://plausible.shamps.dev/api/event";
@@ -95,7 +95,7 @@ app.use(bot.webhookCallback("/webhook"));
 
 app.get("/app", (req, res) => {
   res.redirect(
-    `${FRONTEND_URL}${req.query.tgWebAppStartParam ? "/" + req.query.tgWebAppStartParam.toString() : ""}`
+    `${FRONTEND_URL}${req.query.tgWebAppStartParam ? "/" + req.query.tgWebAppStartParam.toString() : ""}`,
   );
 });
 
