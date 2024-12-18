@@ -15,7 +15,13 @@ export function setupFeedbackCommand(
     logger.info(
       `Feedback mode set to true for user ${ctx.from.username ?? ctx.from.first_name}`,
     );
-    ctx.reply("Пришли свой фидбэк в любом формате!\n");
+    await ctx.replyWithPhoto(
+      "https://storage.yandexcloud.net/dishash-s3/assets/bot/feedback.png",
+      {
+        caption: `Поделитесь своим мнением о DishDash в любом удобном формате\\. Отправьте фото\\, видео или текст прямо здесь\\, а бот передаст отзыв команде разработки\\!`,
+        parse_mode: "MarkdownV2",
+      },
+    );
     ctx.session = {
       feedback_mode: true,
     };
@@ -35,7 +41,9 @@ export function setupFeedbackCommand(
         : ctx.message.from.id.toString(),
     });
     await ctx.forwardMessage(targetChatId);
-    ctx.reply("Спасибо за фидбек!");
+    await ctx.replyWithMarkdownV2(
+      `Большое спасибо :3\n\nВаше мнение правда очень важно для нас\\!`,
+    );
     ctx.session.feedback_mode = false;
     return next();
   });

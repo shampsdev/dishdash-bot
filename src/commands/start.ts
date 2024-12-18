@@ -13,7 +13,7 @@ export function setupStartCommand(
     await ctx.replyWithPhoto(
       "https://storage.yandexcloud.net/dishash-s3/assets/bot/cover.jpeg",
       {
-        caption: `*Как свайпать?*\n\n• Чтобы посмотреть места в одиночку, запустите бота по кнопке ниже\n\n• Чтобы искать места вместе, запустите бота тут и отправьте приглашение в лобби, или тегните @dishdash\\_bot в любом чате`,
+        caption: `*Как найти идеальное место для встречи?*\n\n1\\. Нажмите кнопку «Open»\n2\\. Создайте лобби\n3\\. Отправьте приглашения, если будете выбирать вместе\n4\\. Настройте параметры поиска под ваши цели и бюджет\n5\\. Все готово – начинайте свайпать\\!`,
         parse_mode: "MarkdownV2",
         reply_markup: {
           inline_keyboard: [
