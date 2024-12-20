@@ -11,7 +11,6 @@ import logger from "./utils/logger";
 import { loggerMiddleware } from "./middlewares/loggerMiddleware";
 
 import { setupStartCommand } from "./commands/start";
-import { setupHelpCommand } from "./commands/help";
 import { setupInlineQuery } from "./commands/inline";
 import { TelegramTransport } from "./utils/telegramTransport";
 
@@ -19,6 +18,7 @@ import express from "express";
 import { setupJoinCommand } from "./commands/join";
 import { setupFeedbackCommand } from "./commands/feedback";
 import { FeedbackService } from "./services/feedbackService";
+import { MetricService } from "./services/metricService";
 
 // Telegraf
 interface SessionData {
@@ -51,10 +51,15 @@ bot.use(
   }),
 );
 
+const apiUrl = "https://plausible.shamps.dev/api/event";
+const domain = "dishdash.ru";
+
+const metricService = new MetricService(apiUrl, domain);
+const feedbackService = new FeedbackService(bot, FEEDBACK_CHAT_ID ?? 0);
+
 setupJoinCommand(bot);
-setupStartCommand(bot);
-setupFeedbackCommand(bot, new FeedbackService(bot, FEEDBACK_CHAT_ID ?? 0));
-setupHelpCommand(bot);
+setupStartCommand(bot, metricService);
+setupFeedbackCommand(bot, feedbackService);
 setupInlineQuery(bot);
 
 bot

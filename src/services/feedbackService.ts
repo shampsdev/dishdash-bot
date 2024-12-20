@@ -19,14 +19,14 @@ export class FeedbackService implements IFeedbackService {
     this.feedbackChatId = feedbackChatId;
   }
 
-  sendFeedback(feedback: Feedback) {
+  async sendFeedback(feedback: Feedback) {
     const escapeMarkdown = (text: string): string =>
       text.replace(/([*_[\]()~`>#+\-=|{}.!\\])/g, "\\$1");
 
     const username = escapeMarkdown(feedback.username);
 
     const message = `💌 **Feedback from ${username}**💌`;
-    this.bot.telegram.sendMessage(this.feedbackChatId, message, {
+    await this.bot.telegram.sendMessage(this.feedbackChatId, message, {
       parse_mode: "MarkdownV2",
     });
   }
