@@ -5,6 +5,7 @@ import logger from "src/utils/logger";
 import { Telegraf } from "telegraf";
 import { createUser } from "src/api/createUser";
 import User from "src/api/interfaces/User";
+
 export function setupStartCommand(
   bot: Telegraf<MyContext>,
   metricService: IMetricService,
@@ -19,6 +20,7 @@ export function setupStartCommand(
     };
 
     await createUser(user);
+
     const paramsPayload = ctx.payload;
 
     if (paramsPayload === "feedback") {
