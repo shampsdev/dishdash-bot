@@ -3,6 +3,8 @@ import { BOT_USERNAME } from "src/config";
 import { IMetricService } from "src/services/metricService";
 import logger from "src/utils/logger";
 import { Telegraf } from "telegraf";
+import { createUser } from "src/api/createUser";
+import User from "src/api/interfaces/User";
 
 export function setupStartCommand(
   bot: Telegraf<MyContext>,
@@ -11,6 +13,13 @@ export function setupStartCommand(
   bot.start(async (ctx) => {
     const userId = ctx.from.id;
     metricService.sendTagEvent(userId, ctx.payload);
+
+    const user: User = {
+      name: ctx.from.first_name,
+      telegram: userId,
+    };
+
+    await createUser(user);
 
     const paramsPayload = ctx.payload;
 
