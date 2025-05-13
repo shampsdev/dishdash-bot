@@ -19,6 +19,8 @@ import { setupJoinCommand } from './commands/join';
 import { setupFeedbackCommand } from './commands/feedback';
 import { FeedbackService } from './services/feedbackService';
 import { MetricService } from './services/metricService';
+import { RedirectService } from './services/redirectService';
+import { setupRedirectCommand } from './commands/redirect';
 
 // Telegraf
 interface SessionData {
@@ -56,11 +58,13 @@ const domain = 'dishdash.ru';
 
 const metricService = new MetricService(apiUrl, domain);
 const feedbackService = new FeedbackService(bot, FEEDBACK_CHAT_ID ?? 0);
+const redirectService = new RedirectService(FRONTEND_URL ?? '');
 
 setupJoinCommand(bot);
 setupStartCommand(bot, metricService);
 setupFeedbackCommand(bot, feedbackService);
 setupInlineQuery(bot);
+setupRedirectCommand(bot, redirectService);
 
 bot
   .launch()
