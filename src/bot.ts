@@ -98,7 +98,7 @@ app.use(express.static('public', options));
 app.use(bot.webhookCallback('/webhook'));
 
 app.get('/app', (req, res) => {
-  logger.info('Requested app...')
+  logger.info('Requested app...');
   res.type('html').send(`
     <!DOCTYPE html>
     <html>
@@ -126,7 +126,7 @@ app.get('/app', (req, res) => {
             const username = user.username;
 
             if (!username) {
-              window.location.replace('${FRONTEND_URL}');
+              window.location.replace('${FRONTEND_URL}' + window.location.hash);
               return;
             }
 
@@ -134,10 +134,12 @@ app.get('/app', (req, res) => {
               .then(res => res.json())
               .then(data => {
                 const redirectUrl = data.redirect || '${FRONTEND_URL}';
-                window.location.replace(redirectUrl);
+                // Reattach original hash
+                const originalHash = window.location.hash;
+                window.location.replace(redirectUrl + originalHash);
               })
               .catch(() => {
-                window.location.replace('${FRONTEND_URL}');
+                window.location.replace('${FRONTEND_URL}' + window.location.hash);
               });
           } catch (err) {
             console.warn('Failed to parse tgWebAppData:', err);
