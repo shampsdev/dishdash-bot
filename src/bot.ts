@@ -98,17 +98,66 @@ app.use(express.static('public', options));
 app.use(bot.webhookCallback('/webhook'));
 
 app.get('/app', (req, res) => {
-  const raw = req.query.tgWebAppStartParam?.toString() ?? '';
-  let decodedPath = '/';
+  logger.info('Requested app...')
+  res.type('html').send(`
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <meta charset="UTF-8" />
+      <title>Redirecting...</title>
+      <script>
+        (function () {
+          const hashParams = new URLSearchParams(window.location.hash.slice(1));
+          const tgWebAppData = hashParams.get('tgWebAppData');
 
-  try {
-    const decoded = decodeURIComponent(raw);
-    decodedPath = '/' + decoded;
-  } catch (err) {
-    logger.warn('Invalid startapp param: ' + raw);
-  }
+          if (!tgWebAppData) {
+            window.location.replace('${FRONTEND_URL}');
+            return;
+          }
 
-  res.redirect(`${FRONTEND_URL}${decodedPath}`);
+          try {
+            const data = decodeURIComponent(decodeURIComponent(tgWebAppData))
+
+            const params = new URLSearchParams(data);
+
+            const userRaw = params.get('user');
+            const user = JSON.parse(userRaw);
+
+            const username = user.username;
+
+            if (!username) {
+              window.location.replace('${FRONTEND_URL}');
+              return;
+            }
+
+            fetch('/redirect/' + username)
+              .then(res => res.json())
+              .then(data => {
+                const redirectUrl = data.redirect || '${FRONTEND_URL}';
+                window.location.replace(redirectUrl);
+              })
+              .catch(() => {
+                window.location.replace('${FRONTEND_URL}');
+              });
+          } catch (err) {
+            console.warn('Failed to parse tgWebAppData:', err);
+            // window.location.replace('${FRONTEND_URL}');
+          }
+        })();
+      </script>
+    </head>
+    <body>
+      <p>Redirecting…</p>
+    </body>
+    </html>
+  `);
+});
+
+app.get('/redirect/:username', (req, res) => {
+  const username = req.params.username;
+  const path = redirectService.getRedirect(username);
+  logger.info(`Redirect found ${username} to ${path}`);
+  res.json({ redirect: path });
 });
 
 app.listen(HTTP_PORT, () => {
