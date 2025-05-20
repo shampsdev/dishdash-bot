@@ -64,7 +64,8 @@ setupJoinCommand(bot);
 setupStartCommand(bot, metricService);
 setupFeedbackCommand(bot, feedbackService);
 setupInlineQuery(bot);
-setupRedirectCommand(bot, redirectService);
+
+if (DEBUG) setupRedirectCommand(bot, redirectService);
 
 bot
   .launch()
